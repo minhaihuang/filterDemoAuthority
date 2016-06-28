@@ -1,0 +1,13 @@
+1、此项目模拟了用户登录、添加用户的操作，用来说明系统级别的权限检查过滤器
+2、为使演示方便，项目模拟两个用户：zhangsan和lisi，角色分别是管理员和普通用户，只有管理员有添加用户的权限
+3、采用user--role--permission  即用户--角色--权限体系控制用户的权限。
+	一个user可以有多个角色role,一个role可以有多个权限permission，
+	一个permission对应一个Servlet  的url-pattern
+	为了便于实现和提高访问时间效率，规定需要检查权限的请求路径以 .auth结尾，
+	也就是说权限过滤器只对 .auth结尾的请求路径进行拦截检查  *.auth
+	
+4、权限检查原理
+	用户向 AServlet.auth 路径发起请求 ,权限过滤器拦截此请求，在doFilter方法中，
+	取出保存在session中的用户对象user,如果user不为null,就检查User的每个role是否含有与此路径对应的permission
+	，如果含有，则返回true，让请求通过
+	
